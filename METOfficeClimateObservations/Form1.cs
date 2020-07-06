@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -13,10 +6,10 @@ namespace METOfficeClimateObservations
 {
     public partial class frmMain : Form
     {
-        //Sets numer of columns and rows in data grid that cannot be changed during run time
+        //Month observations grid dimensions
         const int numOfRows = 12, numOfCols = 6;
         
-        //Stores temporary search results in arrays
+        //Store temp search results
         int[] locResults;
         int locCurrentSearchIndex = 0;
         int[] yearResults;
@@ -24,7 +17,7 @@ namespace METOfficeClimateObservations
 
         Random rand;
 
-        //Name of file to access when reading and writing
+        //Located in \Debug\bin
         string fileName = "inputEXTENDED.txt";        
         
         public frmMain()
@@ -32,13 +25,11 @@ namespace METOfficeClimateObservations
             InitializeComponent();
             rand = new Random();
 
-            //Clear search result labels at start
+            //Clear search labels
             lblYearSearchStatus.Text = "";
             lblLocationSearchStatus.Text = "";
 
-            //Set up data grid
             GenerateMonthsDataGrid();
-            //Gets locations, years, and months data from the file
             LoadData();
         }
 
@@ -189,10 +180,8 @@ namespace METOfficeClimateObservations
 
                 inputStream.Close();
             }
-            //Handles any exceptions that may occur when reading from the file 
             catch (Exception e)
             {
-                //Displays error message to the user
                 MessageBox.Show(e.Message);
             }
 
@@ -230,7 +219,8 @@ namespace METOfficeClimateObservations
                 btnDeleteLocation.Enabled = true;
                 ChangeYearAccessibility(true);
                 
-                if (Data.storedLocations[lstLocation.SelectedIndex].Years != null)
+                if (Data.storedLocations[lstLocation.SelectedIndex].Years != null &&
+                    Data.storedLocations[lstLocation.SelectedIndex].Years.Length > 0)
                 {
                     //if the location has year data then the first entry is automatically selected
                     lstYear.SelectedIndex = 0;
@@ -528,6 +518,8 @@ namespace METOfficeClimateObservations
             lstLocation.SelectedIndex = locIndex;
             lstYear.SelectedIndex = locationYears.Length - 1;
 
+            GenerateMonthData();
+            SaveMonthChanges(false);
         }
 
         private void btnSaveYearChanges_Click(object sender, EventArgs e)
@@ -655,9 +647,14 @@ namespace METOfficeClimateObservations
         }
 
         private void btnSaveMonthChanges_Click(object sender, EventArgs e)
-        { 
+        {
+            SaveMonthChanges(true);
+        }
+
+        private void SaveMonthChanges(bool displayCreateMessage)
+        {
             Month[] monthsOfYear = Data.storedLocations[lstLocation.SelectedIndex].Years[lstYear.SelectedIndex].MonthlyObservations;
-            
+
 
             if (monthsOfYear == null)
             {
@@ -688,21 +685,28 @@ namespace METOfficeClimateObservations
                     string numHoursOfSunshine = dgdMonthlyObservations[5, i].Value.ToString();
 
                     Month newMonth = new Month(monthID, maxTemp, minTemp, numDaysAirFrost, millimetresOfRainfall, numHoursOfSunshine);
+                    if (newMonth.IsError) return;
 
                     monthsOfYear[i] = newMonth;
                 }
-            } 
+            }
             catch (Exception ee)
             {
                 MessageBox.Show(ee.Message);
+                return;
             }
-            
+
             Data.storedLocations[lstLocation.SelectedIndex].Years[lstYear.SelectedIndex].MonthlyObservations = monthsOfYear;
 
-            MessageBox.Show("All changes to Monthly Observations successfully saved!");
+            if (displayCreateMessage) MessageBox.Show("All changes to Monthly Observations successfully saved!");
         }
 
         private void btnPopulateFields_Click(object sender, EventArgs e)
+        {
+            GenerateMonthData();
+        }
+
+        private void GenerateMonthData()
         {
             for (int i = 0; i < numOfRows; i++)
             {
@@ -763,7 +767,8 @@ namespace METOfficeClimateObservations
 
         private void btnDeleteYear_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to delete " + Data.storedLocations[lstLocation.SelectedIndex].LocationName + "?", "Warning!",
+            DialogResult result = MessageBox.Show("Are you sure you want to delete year " + 
+                Data.storedLocations[lstLocation.SelectedIndex].Years[lstYear.SelectedIndex].GetYear() + "?", "Warning!",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.No)
@@ -1028,18 +1033,16 @@ namespace METOfficeClimateObservations
 
         private void btnLoadData_Click(object sender, EventArgs e)
         {
-            GetFileDirectory();
-            LoadData();
+            if (GetFileDirectory()) LoadData();
         }
 
 
         private void btnChangeSaveFileDirectory_Click(object sender, EventArgs e)
         {
-            GetFileDirectory();
-            WriteToFile();
+            if (GetFileDirectory()) WriteToFile();
         }
 
-        private void GetFileDirectory()
+        private bool GetFileDirectory()
         {
             try
             {
@@ -1048,14 +1051,19 @@ namespace METOfficeClimateObservations
                 openFileDialog.ShowDialog();
 
                 //file directory is recorded in varaible to be used when reading and writing to the file
+                if (openFileDialog.FileName.Equals("")) return false;
+                
                 fileName = openFileDialog.FileName;
 
                 //Displays current file directory on the form
                 lblFileDirectory.Text = "File Directory: " + fileName;
+
+                return true;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
+                return false;
             }
         }
 
