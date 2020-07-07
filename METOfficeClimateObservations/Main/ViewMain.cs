@@ -194,7 +194,7 @@ namespace METOfficeClimateObservations
                 foreach (Year theYear in selectedLoc.Years)
                 {
                     lstYear.Items.Add(string.Format("{0} Description: {1}",
-                        theYear.YearDesc, theYear.YearDesc));
+                        theYear.YearDate, theYear.YearDesc));
                 }           
             }                  
         }
@@ -399,17 +399,17 @@ namespace METOfficeClimateObservations
 
         private void GenerateMonthsDataGrid()
         {
-            dgdMonthObs.RowCount = cm.MonthData.Length;
-            dgdMonthObs.ColumnCount = cm.MonthNames.Length;
+            dgdMonthObs.RowCount = cm.MonthNames.Length;
+            dgdMonthObs.ColumnCount = cm.MonthData.Length;
 
             for (int i = 0; i < dgdMonthObs.Columns.Count; i++)
             {
-                dgdMonthObs.Columns[i].HeaderText = cm.MonthNames[i];
+                dgdMonthObs.Columns[i].HeaderText = cm.MonthData[i];
             }
 
             for (int i = 0; i < dgdMonthObs.Rows.Count; i++)
             {
-                dgdMonthObs.Rows[i].HeaderCell.Value = cm.MonthData[i];
+                dgdMonthObs.Rows[i].HeaderCell.Value = cm.MonthNames[i];
             }
         }
 
@@ -641,7 +641,7 @@ namespace METOfficeClimateObservations
             {
                 lstLocation.SelectedIndex = locResults[++locCurrentSearchIndex];
             }
-            catch (IndexOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 locCurrentSearchIndex = 0;
                 lstLocation.SelectedIndex = locResults[locCurrentSearchIndex];
@@ -660,7 +660,7 @@ namespace METOfficeClimateObservations
             {
                 lstYear.SelectedIndex = yearResults[++yearCurrentSearchIndex];
             }
-            catch (IndexOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 yearCurrentSearchIndex = 0;
                 lstYear.SelectedIndex = yearResults[yearCurrentSearchIndex];

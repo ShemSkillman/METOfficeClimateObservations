@@ -13,10 +13,10 @@ namespace METOfficeClimateObservations.MVC
     {
         Model model;
 
-        public string[] MonthNames { get; } = { "Month ID", "Maximum Temperature", "Minimum Temperature",
+        public string[] MonthData { get; } = { "Month ID", "Maximum Temperature", "Minimum Temperature",
             "Number of Days of Air Frost", "Millimetres of Rainfall", "Number of Hours of Sunshine"};
 
-        public string[] MonthData { get; } = { "January", "February", "March", "April", "May", "June", "July",
+        public string[] MonthNames { get; } = { "January", "February", "March", "April", "May", "June", "July",
             "August", "September", "October", "November", "December"};
 
         public ControllerMain()
