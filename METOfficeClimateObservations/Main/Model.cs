@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace METOfficeClimateObservations
 
         public Model()
         {
+            FileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\", @"inputEXTENDED.txt");
             ReadFile();
         }
 
