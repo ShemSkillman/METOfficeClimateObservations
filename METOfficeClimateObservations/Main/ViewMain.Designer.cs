@@ -38,7 +38,7 @@
             this.btnSaveYearChanges = new System.Windows.Forms.Button();
             this.btnAddNewYear = new System.Windows.Forms.Button();
             this.btnClearYearFields = new System.Windows.Forms.Button();
-            this.dgdMonthlyObservations = new System.Windows.Forms.DataGridView();
+            this.dgdMonthObs = new System.Windows.Forms.DataGridView();
             this.btnPopulateCells = new System.Windows.Forms.Button();
             this.gboxLocation = new System.Windows.Forms.GroupBox();
             this.txtLongitude = new System.Windows.Forms.TextBox();
@@ -83,7 +83,7 @@
             this.btnNextFoundYear = new System.Windows.Forms.Button();
             this.lblYearSearchStatus = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            ((System.ComponentModel.ISupportInitialize)(this.dgdMonthlyObservations)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgdMonthObs)).BeginInit();
             this.gboxLocation.SuspendLayout();
             this.gboxYearDetails.SuspendLayout();
             this.gboxAdminControls.SuspendLayout();
@@ -194,17 +194,17 @@
             // 
             // dgdMonthlyObservations
             // 
-            this.dgdMonthlyObservations.AllowUserToAddRows = false;
-            this.dgdMonthlyObservations.AllowUserToDeleteRows = false;
-            this.dgdMonthlyObservations.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgdMonthlyObservations.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgdMonthlyObservations.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
-            this.dgdMonthlyObservations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgdMonthlyObservations.Location = new System.Drawing.Point(669, 316);
-            this.dgdMonthlyObservations.Name = "dgdMonthlyObservations";
-            this.dgdMonthlyObservations.RowHeadersWidth = 100;
-            this.dgdMonthlyObservations.Size = new System.Drawing.Size(638, 289);
-            this.dgdMonthlyObservations.TabIndex = 12;
+            this.dgdMonthObs.AllowUserToAddRows = false;
+            this.dgdMonthObs.AllowUserToDeleteRows = false;
+            this.dgdMonthObs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgdMonthObs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgdMonthObs.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
+            this.dgdMonthObs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgdMonthObs.Location = new System.Drawing.Point(669, 316);
+            this.dgdMonthObs.Name = "dgdMonthlyObservations";
+            this.dgdMonthObs.RowHeadersWidth = 100;
+            this.dgdMonthObs.Size = new System.Drawing.Size(638, 289);
+            this.dgdMonthObs.TabIndex = 12;
             // 
             // btnPopulateCells
             // 
@@ -654,7 +654,7 @@
             this.Controls.Add(this.lblSearchYear);
             this.Controls.Add(this.lblSearchLocation);
             this.Controls.Add(this.gboxLocation);
-            this.Controls.Add(this.dgdMonthlyObservations);
+            this.Controls.Add(this.dgdMonthObs);
             this.Controls.Add(this.lstYear);
             this.Controls.Add(this.lstLocation);
             this.Controls.Add(this.lblMonth);
@@ -663,7 +663,7 @@
             this.Controls.Add(this.gboxMonth);
             this.Name = "frmMain";
             this.Text = "MET Office Climate Observations";
-            ((System.ComponentModel.ISupportInitialize)(this.dgdMonthlyObservations)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgdMonthObs)).EndInit();
             this.gboxLocation.ResumeLayout(false);
             this.gboxLocation.PerformLayout();
             this.gboxYearDetails.ResumeLayout(false);
@@ -687,7 +687,7 @@
         private System.Windows.Forms.Button btnSaveYearChanges;
         private System.Windows.Forms.Button btnAddNewYear;
         private System.Windows.Forms.Button btnClearYearFields;
-        private System.Windows.Forms.DataGridView dgdMonthlyObservations;
+        private System.Windows.Forms.DataGridView dgdMonthObs;
         private System.Windows.Forms.Button btnPopulateCells;
         private System.Windows.Forms.GroupBox gboxLocation;
         private System.Windows.Forms.Label lblStreetNumAndName;

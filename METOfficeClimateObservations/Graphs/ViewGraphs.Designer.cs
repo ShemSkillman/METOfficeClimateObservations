@@ -1,6 +1,6 @@
 ﻿namespace METOfficeClimateObservations
 {
-    partial class frmGraphs
+    partial class ViewGraphs
     {
         /// <summary>
         /// Required designer variable.
