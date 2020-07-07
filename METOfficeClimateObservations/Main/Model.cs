@@ -248,6 +248,7 @@ namespace METOfficeClimateObservations
             try
             {
                 Location newLoc = CreateLocation(locName, streetNumAndName, county, postCode, latitude, longitude);
+                if (Locations == null) Locations = new List<Location>();
                 Locations.Add(newLoc);
             }
             catch (Exception ex)
@@ -260,6 +261,8 @@ namespace METOfficeClimateObservations
             try
             {
                 Year year = CreateYear(yearDate, yearDesc);
+
+                if (Locations[locIndex].Years == null) Locations[locIndex].Years = new List<Year>();
                 Locations[locIndex].Years.Add(year);
             }
             catch (Exception ex)
