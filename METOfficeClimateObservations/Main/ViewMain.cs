@@ -21,7 +21,9 @@ namespace METOfficeClimateObservations
         {
             InitializeComponent();
             cm = new ControllerMain();
-            
+
+            lblFileDirectory.Text = "File Directory: " + cm.FileName;
+
             LoadData();
         }
 
@@ -85,7 +87,7 @@ namespace METOfficeClimateObservations
 
         // Updates display based on year data for selected location
         private void UpdateYearDisplayForSelectedLocation()
-        {
+        {            
             // Check years available
             if (cm.Locations[lstLocation.SelectedIndex].Years != null &&
                 cm.Locations[lstLocation.SelectedIndex].Years.Count > 0)
@@ -227,8 +229,14 @@ namespace METOfficeClimateObservations
             {
                 // Can edit, delete years, view monthly obs
                 btnSaveYearChanges.Enabled = true;
-                btnDeleteYear.Enabled = true;
+                btnDeleteYear.Enabled = true; 
                 ChangeMonthlyObservationAccessiblity(true);
+
+                // Disable graphs if no months data
+                if (cm.Locations[lstLocation.SelectedIndex].Years[lstYear.SelectedIndex].MonthObs == null)
+                    btnMonthGraphs.Enabled = false;
+
+
             }
             // Otherwise can only add new years
             else
@@ -318,10 +326,6 @@ namespace METOfficeClimateObservations
             lstYear.SelectedIndex = lstYear.Items.Count - 1;
 
             MessageBox.Show("New year " + txtYearDate.Text + " successfully created!");
-
-            // Automatically generate random monthly obs data for year
-            GenerateMonthData();
-            SaveMonthChanges();
         }
 
         private void btnSaveYearChanges_Click(object sender, EventArgs e)
@@ -473,6 +477,8 @@ namespace METOfficeClimateObservations
 
             cm.SaveMonths(lstLocation.SelectedIndex, lstYear.SelectedIndex, allMonths);
 
+            ChangeMonthlyObservationAccessiblity(true);
+
             MessageBox.Show("All changes to Monthly Observations successfully saved!");
         }
 
@@ -514,6 +520,7 @@ namespace METOfficeClimateObservations
         // Changes user ability to interact with monthly observations section of the form
         private void ChangeMonthlyObservationAccessiblity(bool isEnabled)
         {
+            btnMonthGraphs.Enabled = isEnabled;
             gboxMonth.Enabled = isEnabled;
             dgdMonthObs.Enabled = isEnabled;            
         }
